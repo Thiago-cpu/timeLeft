@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+.container {
+  padding-top: 10px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  
+ 
+  font-size: 4rem;
+  
+  font-family: 'Poppins', sans-serif;
+}
+.timePicker{
+  backdrop-filter: blur(5px);
+}
+.waitTime{
+  text-align: center;
+  color: rgb(221, 207, 207) !important;
+}
