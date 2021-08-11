@@ -17,5 +17,6 @@
 }
 .waitTime{
   text-align: center;
+  line-break: auto;
   color: rgb(221, 207, 207) !important;
 }

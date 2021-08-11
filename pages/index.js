@@ -13,6 +13,7 @@ export default function Home() {
         background: url(${bgImage});
         background-size: cover;
         background-position: center;
+        background-repeat: no-repeat;
       }
     `}</style>
     </div>

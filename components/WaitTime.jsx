@@ -3,27 +3,39 @@ import styles from "../styles/Home.module.css"
 export default function WaitTime(){
     const [waitTime, setWaitTime] = useState(null)
     useEffect(()=>{
-        setWaitTime(Date.parse(window.localStorage.getItem('Date')) - Date.now())
+            const TimeRemaining = Date.parse(window.localStorage.getItem('Date')) - Date.now()
+            setWaitTime(TimeRemaining>0?TimeRemaining:0)
         setInterval(() => {
-            setWaitTime(Date.parse(window.localStorage.getItem('Date')) - Date.now())
+            const TimeRemaining = Date.parse(window.localStorage.getItem('Date')) - Date.now()
+            setWaitTime(TimeRemaining>0?TimeRemaining:0)
         }, 1000);
     },[])
 
-    const getTimeFormat = () =>{
-        if(!waitTime) return "0:0:0:0"
-        let wait = waitTime
-        wait = wait/1000/60/60/24
-        const days = Math.floor(wait)
-        wait -= Math.floor(wait)
-        wait *= 24
-        const hours = Math.floor(wait)
-        wait -= Math.floor(wait)
-        wait *= 60
-        const minutes = Math.floor(wait)
-        wait -= Math.floor(wait)
-        wait*=60
-        const seconds = Math.floor(wait)
-        return `${days}:${hours}:${minutes}:${seconds}`
+    const unitsTimeInMs = {
+        "day": 1000*60*60*24,
+        "hour": 1000*60*60,
+        "minute": 1000*60,
+        "second": 1000,
     }
-    return <p className={styles.waitTime}>{getTimeFormat()}</p>
+    const getTimeFormat = () =>{
+        if(!waitTime) return "0"
+        let wait = waitTime
+        let dateString = ``
+        let days;
+        Object.entries(unitsTimeInMs).forEach(([unit, value]) => {
+            const timesDate = Math.floor(wait/value)
+            wait -= value*timesDate
+            if(timesDate > 0){
+                if(unit === "day"){
+                    days = <p>{timesDate} days</p>
+                } else {
+                    dateString+=`${timesDate}:`
+                }
+            }
+        })
+        dateString = dateString.substring(0, dateString.length-1)
+        dateString = <p>{dateString}</p>
+        return <>{days}{dateString}</>
+    }
+    return <div className={styles.waitTime}>{getTimeFormat()}</div>
 }
